@@ -16,6 +16,9 @@ class BlogPost(models.Model):
     class Meta:
         ordering = ['-date']
 
+    def __str__(self):
+        return self.title
+
     @property
     def detail_url(self):
         return reverse('blog-detail', kwargs={'post_id': self.pk})
