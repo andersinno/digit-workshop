@@ -1,12 +1,11 @@
 from django.http import Http404
 from django.shortcuts import render
-from django.utils import timezone
 
 from blog.models import BlogPost
 
 
 def index(request):
-    blog_posts = BlogPost.objects.filter(date__lte=timezone.now())
+    blog_posts = BlogPost.objects.public()
 
     return render(request, 'blog/index.html', {
         'blog_posts': blog_posts,
@@ -15,7 +14,7 @@ def index(request):
 
 def post_detail(request, post_id):
     try:
-        blog_post = BlogPost.objects.filter(date__lte=timezone.now()).get(pk=post_id)
+        blog_post = BlogPost.objects.public().get(pk=post_id)
     except BlogPost.DoesNotExist:
         raise Http404('Post does not exist')
 

@@ -1,5 +1,12 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+
+
+class BlogPostQuerySet(models.QuerySet):
+
+    def public(self):
+        return self.filter(date__lte=timezone.now())
 
 
 class BlogPost(models.Model):
@@ -12,6 +19,8 @@ class BlogPost(models.Model):
         null=False)
     content = models.TextField(
         blank=False)
+
+    objects = BlogPostQuerySet.as_manager()
 
     class Meta:
         ordering = ['-date']
