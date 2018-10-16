@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mt-5">Blog</h1>
+
+    {% if blog_posts %}
+        <ul>
+            {% for post in blog_posts %}
+                <li><a href="{{ post.detail_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nothing here...</p>
+    {% endif %}
+{% endblock content %}
