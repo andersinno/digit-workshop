@@ -1,7 +1,9 @@
 from django.http import Http404
 from django.shortcuts import render
+from rest_framework import viewsets
 
 from blog.models import BlogPost
+from blog.serializers import BlogPostSerializer
 
 
 def index(request):
@@ -21,3 +23,8 @@ def post_detail(request, post_id):
     return render(request, 'blog/detail.html', {
         'blog_post': blog_post,
     })
+
+
+class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = BlogPost.objects.public()
+    serializer_class = BlogPostSerializer
