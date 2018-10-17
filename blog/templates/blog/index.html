@@ -12,4 +12,32 @@
     {% else %}
         <p>Nothing here...</p>
     {% endif %}
+
+    <input
+        type="button"
+        id="get_posts"
+        value="Get blog posts from API!"
+        class="btn btn-primary">
+
+    <div id="results">
+        <ul></ul>
+    </div>
 {% endblock content %}
+
+{% block extra_js %}
+    <script>
+        $('#get_posts').click(function() {
+            $results = $('#results');
+            $.get("{% url 'api-blog-posts' %}", function(data) {
+                console.log(data);
+                $list = $('<ul></ul>');
+                data.forEach(function(post) {
+                    $list.append(
+                        $('<li></<li>').text(post.title)
+                    );
+                });
+                $results.append($list);
+            });
+        });
+    </script>
+{% endblock extra_js %}
